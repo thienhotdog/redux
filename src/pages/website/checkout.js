@@ -26,13 +26,15 @@ const CheckOut = () => {
             products: cart.cartItems,
             amount: cart.cartAmout,
             address: data.address,
-            userId: user._id
+            userId: user._id,
+            status: "Chưa Duyệt"
         }
         console.log(newProduct);
         dispatch(addOrder(newProduct));
         toast("đặt hàng thành công",{
             onClose: () =>navigate("/")
         });
+        localStorage.removeItem("cartItems");
     }
     const {user} = isAuthenticated();
     return (
@@ -52,9 +54,12 @@ const CheckOut = () => {
                             {cart.cartItems.map((item, index) => (
                                 <li className="list-group-item d-flex justify-content-between lh-sm" key={index}>
                                     <div>
-                                        <h6 className="my-0">{item.name}</h6>
+                                        <h6 className="my-0">
+                                            {item.name}
+                                            <span className="badge bg-primary rounded-pill">{item.cartQuantity}</span>
+                                        </h6>
                                     </div>
-                                    <span className="text-muted">{item.price}</span>
+                                    <span className="text-muted">{item.price * item.cartQuantity}</span>
                                 </li>
                             ))}
                             <li className="list-group-item d-flex justify-content-between">

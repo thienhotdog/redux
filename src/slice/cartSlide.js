@@ -33,10 +33,7 @@ const cartSlide = createSlice({
             if (state.cartItems[itemIdex].cartQuantity > 1) {
                 state.cartItems[itemIdex].cartQuantity -= 1
             } else {
-                const newCartItems = state.cartItems.filter(
-                    cartItem => cartItem._id === action.payload._id
-                )
-                state.cartItems = newCartItems;
+                state.cartItems[itemIdex].cartQuantity = 1 
             }
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         },

@@ -53,7 +53,7 @@ const Shop = () => {
         console.log(product);
         dispatch(addToCart(product));
         toast("thêm thành công",{
-            onClose: () =>navigate("/cart")
+            onClose: () => navigate("/cart")
         });
     }
     const handleAddToCarts = () => {
@@ -135,7 +135,7 @@ const Shop = () => {
                         </Col>
 
                     })}
-                    {product.length == 0 && <p>không tìm thấy sản phẩm</p>}
+                    {product.length === 0 && <p>không tìm thấy sản phẩm</p>}
                 </Row>
             </Content>
         </Layout>

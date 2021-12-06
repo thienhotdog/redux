@@ -21,7 +21,7 @@ const Signin = () => {
     if (user && user.role === 1) {
       return <Navigate to="/admin" />;
     }
-    if (user != undefined) {
+    if (user !== undefined) {
       return <Navigate to="/" />;
     } 
 };
