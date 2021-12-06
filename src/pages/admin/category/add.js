@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addCategory, getAll } from "../../../slice/category";
 import { useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -31,14 +32,17 @@ const AddCategory = () =>{
         });
         if(check == 0){
             dispatch(addCategory(data));
-            navigate("/admin/Categories")
+            toast("thêm thành công",{
+                onClose: () =>navigate("/admin/Categories")
+            });
         }else{
-            alert("tên danh mục đã tồn tại")
+            toast("tên danh mục đã tồn tại")
         }
 
     }
     return(
         <div>
+            <ToastContainer />
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mt-3">
                     <label className="form-label">Tên Danh Mục</label>

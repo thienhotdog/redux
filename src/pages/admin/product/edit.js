@@ -6,6 +6,7 @@ import { editProduct } from "../../../slice/product";
 import { get } from "../../../api/product";
 import { getAll } from "../../../slice/category";
 import { fetchProducts } from "../../../slice/product";
+import { ToastContainer, toast } from 'react-toastify';
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from '@firebase/storage';
 import "../../../firebase/firebase";
 
@@ -16,7 +17,6 @@ const EditProduct = () => {
   useEffect(() => {
     dispatch(getAll())
   }, [])
-  const products = useSelector((state) => state.product.products);
   useEffect(() => {
     dispatch(fetchProducts())
   }, [])
@@ -41,7 +41,6 @@ const EditProduct = () => {
     };
     getProduct();
   }, [])
-
   const navigate = useNavigate();
   const onSubmit = (data) => {
     if (typeof data.img === "object") {
@@ -55,23 +54,21 @@ const EditProduct = () => {
         getDownloadURL(UploadTask.snapshot.ref).then((url) => {
           data.img = url;
           dispatch(editProduct(data));
-          alert("edit thành công");
-          navigate("/admin")
+          toast("edit thêm thành công",{
+            onClose: () =>navigate("/admin")
+        });
         })
       })
     } else {
       dispatch(editProduct(data));
-      alert("edit thành công");
-      navigate("/admin")
+      toast("edit thêm thành công",{
+        onClose: () =>navigate("/admin")
+    });
     }
-
-
-
-    //  dispatch(editProduct(newProducts));
-    //  navigate("/admin");
   }
   return (
     <div>
+      <ToastContainer />
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 className="h2">cập nhật sản phẩm</h2>
       </div>

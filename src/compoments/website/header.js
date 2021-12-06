@@ -2,9 +2,17 @@ import { Link } from "react-router-dom";
 import "../../assets/website.css";
 import {useNavigate} from "react-router-dom";
 import {isAuthenticated} from "../../auth/index"
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getTotals } from "../../slice/cartSlide";
 
 
 const Header = () =>{
+    const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    useEffect(() =>{
+        dispatch(getTotals())
+    },[cart])
     const navigate = useNavigate();
     const {user} = isAuthenticated();
     console.log(user);
@@ -40,7 +48,13 @@ const Header = () =>{
                 {
                     (user) ? (
                         <div className="navbar-list">
-                           <div style={{"position":"relative", "width":"190px"}}>
+                            <div className="navbar-item">
+                                <Link to="cart">
+                                    <i className="fas fa-shopping-cart"></i>
+                                    <span className="badge bg-primary rounded-pill">{cart.cartQuantity}</span>    
+                                </Link>
+                            </div>
+                           <div  className="navbar-item" style={{"position":"relative", "width":"190px"}}>
                                 <ul className="user_action" >
                                     <a href="">{user.name}</a>
                                     <div className="user_form">

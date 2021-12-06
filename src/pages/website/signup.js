@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { signup } from "../../api/authApi";
+import { ToastContainer, toast } from 'react-toastify'
 
 
 
 const Signup = () => {
   const { register, handleSubmit, formState:{errors} } = useForm();
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  // const [user, set]
   const onSubmit = async (user, e) => {
     try {                               
      const response = await signup(user);
@@ -17,14 +16,14 @@ const Signup = () => {
       setSuccess(true);
       e.target.reset();
     } catch (error) {
-      alert("đã tồn tại tài khoản")
+     toast("đã tồn tại tài khoản")
     }
   };
   return (
     <div className="col-6 mx-auto container">
+      <ToastContainer />
       <h2 className="mt-2">Đăng ký tài khoản</h2>
       <hr />
-      {error && <div className="alert alert-danger">{error}</div>}
       {success && (
         <div className="alert alert-success">
           Bạn đã đăng ký thành công. Click <Link to="/signin">vào đây</Link> để

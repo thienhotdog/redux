@@ -12,6 +12,10 @@ import EditProduct from "./pages/admin/product/edit";
 import ListCategory from "./pages/admin/category/list";
 import EditCategory from "./pages/admin/category/edit";
 import AddCategory from "./pages/admin/category/add";
+import ShopCart from "./pages/website/cart";
+import CheckOut from "./pages/website/checkout";
+import ListOrder from "./pages/admin/order/list";
+import OrderDetail from "./pages/admin/order/order_detail";
 
 const Router = () =>{
     return(
@@ -25,6 +29,8 @@ const Router = () =>{
                     <Route index element={<Navigate to="shop" />} />
                     <Route path="shop" element={<Shop  />} />
                     <Route path="product/:id" element={<ProductDetailPage />} />
+                    <Route path="cart" element={<ShopCart />}/>
+                    <Route  path="checkout" element={<CheckOut />} />
                 </Route>
 
                  {/* Layout Admin*/}
@@ -40,6 +46,8 @@ const Router = () =>{
                     <Route path="categories" element={<ListCategory />} />
                     <Route path="addcategory" element={<AddCategory />} />
                     <Route path="category/:slug" element={<EditCategory />} />
+                    <Route path="listorder" element={<ListOrder />} />
+                    <Route path="order/:id" element={<OrderDetail />} />
                 </Route>
 
             </Routes>

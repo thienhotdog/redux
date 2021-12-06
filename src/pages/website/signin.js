@@ -1,35 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { authenticate, isAuthenticated } from "../../auth";
+import { isAuthenticated } from "../../auth";
 import { Link, Navigate } from "react-router-dom";
-
-import { signin } from "../../api/authApi";
+import { ToastContainer, toast } from 'react-toastify';
+import { signins } from "../../slice/auth";
+import { useDispatch } from "react-redux";
 
 
 const Signin = () => {
   const {user} = isAuthenticated();
   const { register, handleSubmit, formState:{errors} } = useForm();
-  const [success, setSuccess] = useState(false);
+  const dispatch = useDispatch()
   const onSubmit = async (user) => {
-    try {
-      const {data} = await signin(user)
-      authenticate(data)
-      setSuccess(true);
-    } catch (error) {
-      alert('sai tài khoản hoặc mật khẩu')
-    }
+    const response =  await dispatch(signins(user));
+      if(response.payload.msg ){
+        toast(response.payload.msg)
+      }
   };
   const redirectUser = () => {
-    if (success) {
-      if (user && user.role === 1) {
-        return <Navigate to="/admin" />;
-      } else {
-        return <Navigate to="/" />;
-      }
+    if (user && user.role === 1) {
+      return <Navigate to="/admin" />;
     }
-  };
+    if (user != undefined) {
+      return <Navigate to="/" />;
+    } 
+};
   return (
     <div className="col-6 mx-auto mt-2">
+      <ToastContainer />
       {redirectUser()}
       <h2> Đăng nhập</h2>
       <hr />

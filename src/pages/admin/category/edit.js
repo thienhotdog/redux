@@ -4,7 +4,7 @@ import {useDispatch,useSelector} from "react-redux";
 import {useState,useEffect} from "react";
 import { editCategory,getAll } from "../../../slice/category";
 import { get } from "../../../api/category";
-
+import { ToastContainer, toast } from 'react-toastify';
 const EditCategory = () =>{
     const {slug} = useParams();
     const categories = useSelector((state) => state.category.category);
@@ -47,14 +47,17 @@ const EditCategory = () =>{
         });
         if(check == 0){
             dispatch(editCategory(newProducts));
-            navigate("/admin/Categories")
+            toast("edit thêm thành công",{
+                onClose: () =>navigate("/admin/Categories")
+            });
         }else{
-            alert("tên danh mục đã tồn tại")
+            toast("tên danh mục đã tồn tại")
         }
 
     }
     return(
         <div>
+        <ToastContainer />
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 className="h2">cập nhật sản phẩm</h2>
       </div>

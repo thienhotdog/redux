@@ -6,6 +6,7 @@ import { addFetchProduct, fetchProducts } from "../../../slice/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAll } from "../../../slice/category";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -28,7 +29,6 @@ const Addproduct = () =>{
     } = useForm();
 
     const navigate = useNavigate();
-
     const onSubmit = (data) =>{
         // console.log(data);
         const storage = getStorage();
@@ -54,10 +54,11 @@ const Addproduct = () =>{
                });
                  if(check == 0){
                    dispatch(addFetchProduct(newProducts));
-                   alert("thêm sản phẩm thành công");
-                   navigate("/admin")
+                   toast("thêm thành công",{
+                    onClose: () =>navigate("/admin")
+                });
                  }else{
-                   alert("tên sản phẩm đã tồn tại")
+                    toast("sản phẩm đã tồn tại")
                  }
             //    console.log(newProducts);
                 // dispatch(addFetchProduct(newProducts));
@@ -68,6 +69,7 @@ const Addproduct = () =>{
     }
     return(
         <div>
+            <ToastContainer />
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                     <label className="form-label">Tên Sản Phẩm</label>

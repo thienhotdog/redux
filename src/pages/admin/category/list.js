@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAll, removeCategory } from "../../../slice/category";
 
-
 const ListCategory = () =>{
     const category = useSelector((state) => state.category.category);
     console.log(category);
@@ -11,6 +10,12 @@ const ListCategory = () =>{
     useEffect(() =>{
         dispatch(getAll())
     },[])
+    const handRemove = (slug) =>{
+      const isConfirm = window.confirm("bạn có muốn xóa không ?");
+      if(isConfirm){
+        dispatch(removeCategory(slug))
+      }
+    }
     return(
         <div>
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -36,7 +41,7 @@ const ListCategory = () =>{
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
                   <td>
-                      <button onClick={() => dispatch(removeCategory(item.slug))} className="btn btn-danger" >delete </button>
+                      <button onClick={() => handRemove(item.slug)} className="btn btn-danger" >delete </button>
                       <Link to={`/admin/category/${item.slug}`} className="btn btn-primary">Edit</Link>
                   </td>
                 </tr>
